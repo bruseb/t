@@ -5,12 +5,14 @@ public class Alumno {
 	private String nombreAlumno;
 	private String apellidoAlumno;
 	private Integer dniAlumno;
+	private Integer fechaDeIngreso;
 
-	public Alumno(String nombreAlumno, String apellidoAlumno, Integer dniAlumno) {
+	public Alumno(String nombreAlumno, String apellidoAlumno, Integer dniAlumno, Integer fechaDeIngreso) {
 
 		this.nombreAlumno = nombreAlumno;
 		this.apellidoAlumno = apellidoAlumno;
 		this.dniAlumno = dniAlumno;
+		this.fechaDeIngreso = fechaDeIngreso;
 
 	}
 
@@ -37,4 +39,13 @@ public class Alumno {
 	public void setDniAlumno(Integer dniAlumno) {
 		this.dniAlumno = dniAlumno;
 	}
+
+	public Integer getFechaDeIngreso() {
+		return fechaDeIngreso;
+	}
+
+	public void setFechaDeIngreso(Integer fechaDeIngreso) {
+		this.fechaDeIngreso = fechaDeIngreso;
+	}
+	
 }
