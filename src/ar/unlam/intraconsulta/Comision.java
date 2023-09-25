@@ -7,13 +7,13 @@ public class Comision {
 
 	private Integer idComision;
 	private Materia materia;
-	private CicloElectivo cicloElectivo;
+	private CicloLectivo cicloElectivo;
 	private Turno turno;
 	private ArrayList <Docente> docentes;
 	private ArrayList <Alumno> alumnos;
 	
 
-	public Comision(Integer idComision, Materia materia1, CicloElectivo cicloElectivo, Turno turno) {
+	public Comision(Integer idComision, Materia materia1, CicloLectivo cicloElectivo, Turno turno) {
 		
 		this.idComision = idComision;
 		this.materia = materia1;
@@ -60,11 +60,11 @@ public class Comision {
 		this.materia = materia;
 	}
 
-	public CicloElectivo getCicloElectivo() {
+	public CicloLectivo getCicloElectivo() {
 		return cicloElectivo;
 	}
 
-	public void setCicloElectivo(CicloElectivo cicloElectivo) {
+	public void setCicloElectivo(CicloLectivo cicloElectivo) {
 		this.cicloElectivo = cicloElectivo;
 	}
 

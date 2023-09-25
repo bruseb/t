@@ -2,20 +2,22 @@ package ar.unlam.intraconsulta;
 
 import java.util.ArrayList;
 
+import ar.unlam.intraconsulta.*;
+
 public class Universidad {
 
 	private String nombre;
 	private ArrayList<Comision> comisiones;
 	private ArrayList<Alumno> alumnos;
 	private ArrayList<Materia> materias;
-	private ArrayList<CicloElectivo> ciclosElectivos;
+	private ArrayList<CicloLectivo> ciclosElectivos;
 	private ArrayList<Docente> docentes;
 
 	public Universidad(String nombreUniversidad) {
 		this.nombre = nombreUniversidad;
 		this.alumnos = new ArrayList<Alumno>();
 		this.materias = new ArrayList<Materia>();
-		this.ciclosElectivos = new ArrayList<CicloElectivo>();
+		this.ciclosElectivos = new ArrayList<CicloLectivo>();
 		this.docentes = new ArrayList<Docente>();
 		this.comisiones = new ArrayList<Comision>();
 	}
@@ -56,32 +58,24 @@ public class Universidad {
 		return null;
 	}
 
-	public Boolean agregarCicloElectivo(CicloElectivo cicloElectivo1) {
-		Boolean sePudoAgregar = false;
-		if (buscarCicloElectivoPorId(cicloElectivo1.getId()) == null
-				&& verificarFecha(cicloElectivo1.getFechaDeInicio(), cicloElectivo1.getFechaDeFin())) {
-			ciclosElectivos.add(cicloElectivo1);
-			sePudoAgregar = true;
-		}
-		return sePudoAgregar;
-	}
-
-	private Boolean verificarFecha(Integer fechaDeInicio, Integer fechaDeFin) {
-		Boolean fechaCorrecta = true;
-		for (CicloElectivo cicloElectivo : ciclosElectivos) {
-			if (cicloElectivo.getFechaDeInicio() >= fechaDeInicio && cicloElectivo.getFechaDeFin() <= fechaDeInicio) {
-
-			} else if (cicloElectivo.getFechaDeInicio() >= fechaDeFin && cicloElectivo.getFechaDeFin() <= fechaDeFin) {
-				fechaCorrecta = false;
-				return fechaCorrecta;
+	public Boolean agregarCicloElectivo(CicloLectivo cicloElectivo1) {
+		if (this.ciclosElectivos.size() != 0) {
+			for (int i = 0; i < this.ciclosElectivos.size(); i++) {
+				if (this.ciclosElectivos.get(i).equals(cicloElectivo1)) {
+					return false;
+				}
+				if (this.ciclosElectivos.get(i).lasFechasSeSuperponen(cicloElectivo1)) {
+					return false;
+				}
 			}
 		}
-
-		return true;
+		return this.ciclosElectivos.add(cicloElectivo1);
 	}
 
-	private CicloElectivo buscarCicloElectivoPorId(Integer id) {
-		for (CicloElectivo cicloElectivo : ciclosElectivos) {
+	
+
+	private CicloLectivo buscarCicloElectivoPorId(Integer id) {
+		for (CicloLectivo cicloElectivo : ciclosElectivos) {
 			if (cicloElectivo.getId().equals(id)) {
 				return cicloElectivo;
 			}
@@ -171,10 +165,27 @@ public class Universidad {
 		}
 		return sePudoEliminar;
 	}
-
-	public Boolean inscribirAlumnoAComision(Integer idComision, Integer dniAlumno) {
-		
+	
+	private Comision buscarComisionPorId(Integer idComision) {
+		for(Comision i: this.comisiones) {
+			if(i.getIdComision().equals(idComision)) {
+				return i;
+			}
+		}
 		return null;
+	}
+
+	public Boolean inscribirAlumnoAComision(Integer dniAlumno, Integer idComision) {
+		Alumno alumno = null;
+		Comision comision = null;
+		alumno = buscarAlumnoPorDni(dniAlumno);
+		comision = buscarComisionPorId(idComision);
+		if(alumno != null & comision !=null) {
+			comision.agregarAlumno(alumno);
+			return true;
+		}
+
+		return false;
 	}
 
 }

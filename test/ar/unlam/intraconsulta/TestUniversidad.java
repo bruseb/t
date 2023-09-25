@@ -2,6 +2,8 @@ package ar.unlam.intraconsulta;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
+
 import org.junit.Test;
 
 public class TestUniversidad {
@@ -65,7 +67,8 @@ public class TestUniversidad {
 	@Test
 	public void queNoSePuedaRegistrarUnAlumnoConElMismoDniAUnaUniversidad() {
 
-		String nombreUniversidad = "Unlam", nombreAlumno1 = "Bruno", apellidoAlumno1 = "Merlo",nombreAlumno2 = "Carlos", apellidoAlumno2 = "Torres";
+		String nombreUniversidad = "Unlam", nombreAlumno1 = "Bruno", apellidoAlumno1 = "Merlo",
+				nombreAlumno2 = "Carlos", apellidoAlumno2 = "Torres";
 		Integer dniAlumno1 = 33180793, dniAlumno2 = 33180793, fechaDeIngreso1 = 20220301, fechaDeIngreso2 = 20210301;
 
 		// preparacion
@@ -92,7 +95,7 @@ public class TestUniversidad {
 		// preparacion
 
 		Universidad unlam = new Universidad(nombreUniversidad);
-		CicloElectivo cicloElectivo1 = new CicloElectivo(IdClicloElectivo, fechaDeInscripcion, fechaDeInicio,
+		CicloLectivo cicloElectivo1 = new CicloLectivo(IdClicloElectivo, fechaDeInscripcion, fechaDeInicio,
 				fechaDeFin);
 
 		// ejecucion
@@ -114,9 +117,9 @@ public class TestUniversidad {
 		// preparacion
 
 		Universidad unlam = new Universidad(nombreUniversidad);
-		CicloElectivo cicloElectivo1 = new CicloElectivo(IdClicloElectivo1, fechaDeInscripcion1, fechaDeInicio1,
+		CicloLectivo cicloElectivo1 = new CicloLectivo(IdClicloElectivo1, fechaDeInscripcion1, fechaDeInicio1,
 				fechaDeFin1);
-		CicloElectivo cicloElectivo2 = new CicloElectivo(IdClicloElectivo2, fechaDeInscripcion2, fechaDeInicio2,
+		CicloLectivo cicloElectivo2 = new CicloLectivo(IdClicloElectivo2, fechaDeInscripcion2, fechaDeInicio2,
 				fechaDeFin2);
 
 		// ejecucion
@@ -128,30 +131,35 @@ public class TestUniversidad {
 
 	}
 
-//	@Test
-//	public void queNoSePuedaAgregarDosCiclosLectivosConFechasSuperpuestasAUnaUniversidad() {
-//
-//		String nombreUniversidad = "Unlam";
-//		Integer IdClicloElectivo1 = 1, fechaDeInicio1 = 20230327, fechaDeFin1 = 20230715,
-//				fechaDeInscripcion1 = 20230313, IdClicloElectivo2 = 2, fechaDeInicio2 = 20230328,
-//				fechaDeFin2 = 20230714, fechaDeInscripcion2 = 20230312;
-//
-//		// preparacion
-//
-//		Universidad unlam = new Universidad(nombreUniversidad);
-//		CicloElectivo cicloElectivo1 = new CicloElectivo(IdClicloElectivo1, fechaDeInscripcion1, fechaDeInicio1,
-//				fechaDeFin1);
-//		CicloElectivo cicloElectivo2 = new CicloElectivo(IdClicloElectivo2, fechaDeInscripcion2, fechaDeInicio2,
-//				fechaDeFin2);
-//
-//		// ejecucion
-//		unlam.agregarCicloElectivo(cicloElectivo1);
-//		Boolean registroFallido = unlam.agregarCicloElectivo(cicloElectivo2);
-//
-//		// validacion
-//		assertFalse(registroFallido);
-//
-//	}
+	@Test
+	public void queNoSePuedaAgregarDosCiclosLectivosConFechasSuperpuestasAUnaUniversidad() {
+
+		String nombreUniversidad = "Unlam";
+
+		Integer idPrimerCicloLectivo = 1;
+		Integer idSegundoCicloLectivo = 2;
+		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 3, 14);
+		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 7, 14);
+		LocalDate fechaInicioCicloLectivoSegundo = LocalDate.of(2023, 3, 13);
+		LocalDate fechaFinalizacionCicloLectivoSegundo = LocalDate.of(2023, 6, 1);
+		LocalDate fechaInscripcion = LocalDate.of(2023, 3, 1);
+
+		// preparacion
+
+		Universidad unlam = new Universidad(nombreUniversidad);
+		CicloLectivo primerCicloLectivo = new CicloLectivo(idPrimerCicloLectivo, 
+				fechaInscripcion, fechaInicioCicloLectivo, fechaFinalizacionCicloLectivo);
+		CicloLectivo segundoCicloLectivo = new CicloLectivo(idSegundoCicloLectivo, fechaInscripcion,
+				fechaInicioCicloLectivoSegundo, fechaFinalizacionCicloLectivoSegundo);
+
+		// ejecucion
+		unlam.agregarCicloElectivo(primerCicloLectivo);
+		Boolean registroFallido = unlam.agregarCicloElectivo(segundoCicloLectivo);
+
+		// validacion
+		assertFalse(registroFallido);
+
+	}
 
 	@Test
 	public void queSePuedaAgregarComisionAUnaUniversidad() {
@@ -159,7 +167,7 @@ public class TestUniversidad {
 		Integer IdClicloElectivo = 1, fechaDeInicio = 20230327, fechaDeFin = 20230715, fechaDeInscripcion = 20230313,
 				idComision = 1;
 		Materia materia1 = new Materia(1, "Matematica");
-		CicloElectivo cicloElectivo2023 = new CicloElectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
+		CicloLectivo cicloElectivo2023 = new CicloLectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
 				fechaDeInscripcion);
 		Turno turno = new Turno("Mañana");
 
@@ -182,7 +190,7 @@ public class TestUniversidad {
 		Integer IdClicloElectivo = 1, fechaDeInicio = 20230327, fechaDeFin = 20230715, fechaDeInscripcion = 20230313,
 				idComision = 1;
 		Materia materia1 = new Materia(1, "Matematica");
-		CicloElectivo cicloElectivo2023 = new CicloElectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
+		CicloLectivo cicloElectivo2023 = new CicloLectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
 				fechaDeInscripcion);
 		Turno turno = new Turno("Mañana");
 
@@ -246,9 +254,9 @@ public class TestUniversidad {
 		Integer dniDocente1 = 14141414, fechaDeIngreso1 = 20050301, IdClicloElectivo = 1, fechaDeInicio = 20230327,
 				fechaDeFin = 20230715, fechaDeInscripcion = 20230313, idComision = 1;
 		Materia materia1 = new Materia(1, "Matematica");
-		CicloElectivo cicloElectivo1 = new CicloElectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
+		CicloLectivo cicloElectivo1 = new CicloLectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
 				fechaDeInscripcion);
-		Turno turno = new Turno("Mañana");
+		Turno turno = Turno.Mañana;
 
 		// preparacion
 
@@ -265,15 +273,17 @@ public class TestUniversidad {
 		assertTrue(resultadoExitoso);
 
 	}
+
 	@Test
 	public void queNoSePuedaasignarElmismoDocenteALaMismaComision() {
 		String nombreUniversidad = "Unlam", nombreDocente1 = "Juan", apellidoDocente1 = "Alegre";
-		Integer dniDocente1 = 14141414, fechaDeIngreso1 = 20050301, IdClicloElectivo = 1, fechaDeInicio = 20230327, fechaDeFin = 20230715, fechaDeInscripcion = 20230313, idComision = 1;
+		Integer dniDocente1 = 14141414, fechaDeIngreso1 = 20050301, IdClicloElectivo = 1, fechaDeInicio = 20230327,
+				fechaDeFin = 20230715, fechaDeInscripcion = 20230313, idComision = 1;
 		Materia materia1 = new Materia(1, "Matematica");
-		CicloElectivo cicloElectivo1 = new CicloElectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
+		CicloLectivo cicloElectivo1 = new CicloLectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
 				fechaDeInscripcion);
-		Turno turno = new Turno("Mañana");
-		
+		Turno turno = Turno.Mañana;
+
 		// preparacion
 
 		Universidad unlam = new Universidad(nombreUniversidad);
@@ -281,13 +291,10 @@ public class TestUniversidad {
 		Comision comision = new Comision(idComision, materia1, cicloElectivo1, turno);
 		unlam.registrarDocente(docente1);
 		unlam.agregarComision(comision);
-		
-		
 
 		// ejecucion
-		unlam.asignarDocente(idComision,docente1);
-		Boolean resultadoFallido = unlam.asignarDocente(idComision,docente1);
-		
+		unlam.asignarDocente(idComision, docente1);
+		Boolean resultadoFallido = unlam.asignarDocente(idComision, docente1);
 
 		// validacion
 		assertFalse(resultadoFallido);
@@ -338,29 +345,81 @@ public class TestUniversidad {
 
 	}
 
-//	@Test
-//	public void queSePuedaInscribirUnAlumnoAUnaComision() {
-//
-//		String nombreUniversidad = "Unlam", nombreAlumno = "Bruno", apellidoAlumno = "Merlo";
-//		
-//		Integer IdClicloElectivo = 1, fechaDeInicio = 20230327, fechaDeFin = 20230715, fechaDeInscripcion = 20230313,idComision = 1, dniAlumno = 33180793,fechaDeIngreso = 20220301;
-//		Materia materia1 = new Materia(1, "Matematica");
-//		CicloElectivo cicloElectivo = new CicloElectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
-//				fechaDeInscripcion);
-//		Turno turno = new Turno("Mañana");
-//
-//		// preparacion
-//
-//		Universidad unlam = new Universidad(nombreUniversidad);
-//		Comision comision = new Comision(idComision, materia1, cicloElectivo, turno);
-//		Alumno alumno = new Alumno(nombreAlumno, apellidoAlumno, dniAlumno, fechaDeIngreso);
-//
-//		// ejecucion
-//		Boolean inscripcionExitosa = unlam.inscribirAlumnoAComision(idComision, dniAlumno);
-//
-//		// validacion
-//		assertTrue(inscripcionExitosa);
-//
-//	}
+	@Test
+	public void queSePuedaInscribirUnAlumnoAUnaComision() {
+		Boolean inscripcionExitosa = false;
+
+		String nombreUniversidad = "Unlam", nombreAlumno = "Bruno", apellidoAlumno = "Merlo";
+		Integer dniAlumno = 1;
+		LocalDate fechaDeIngreso = LocalDate.of(2023, 2, 23);
+		
+		Integer idCicloLectivo = 1;
+		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 3, 14);
+		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 7, 14);
+		LocalDate fechaInscripcion = LocalDate.of(2023, 3, 1);
+	
+		Integer idComision = 1;
+		Materia materia1 = new Materia(1, "Matematica");
+
+		Turno turno = Turno.Mañana;
+
+		// preparacion
+
+
+		// ejecucion
+		CicloLectivo cicloElectivo = new CicloLectivo(idCicloLectivo, fechaInicioCicloLectivo, fechaFinalizacionCicloLectivo,fechaInscripcion);
+		Universidad unlam = new Universidad(nombreUniversidad);
+		Comision comision = new Comision(idComision, materia1, cicloElectivo, turno);
+		Alumno alumno = new Alumno(nombreAlumno, apellidoAlumno, dniAlumno, fechaDeIngreso);
+		
+		unlam.registrar(alumno);
+		unlam.agregarCicloElectivo(cicloElectivo);
+		unlam.agregarComision(comision);
+		inscripcionExitosa= unlam.inscribirAlumnoAComision(alumno.getDniAlumno(), comision.getIdComision());
+		
+
+		// validacion
+		assertTrue(inscripcionExitosa);
+
+	}
+	
+	@Test
+	public void queNoSePuedaInscribirUnAlumnoAUnaComisionSiNoTieneLasCorrelativasAprobadas() {
+		Boolean inscripcionExitosa = false;
+
+		String nombreUniversidad = "Unlam", nombreAlumno = "Bruno", apellidoAlumno = "Merlo";
+		Integer dniAlumno = 1;
+		LocalDate fechaDeIngreso = LocalDate.of(2023, 2, 23);
+		
+		Integer idCicloLectivo = 1;
+		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 3, 14);
+		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 7, 14);
+		LocalDate fechaInscripcion = LocalDate.of(2023, 3, 1);
+	
+		Integer idComision = 1;
+		Materia materia1 = new Materia(1, "Matematica");
+
+		Turno turno = Turno.Mañana;
+
+		// preparacion
+
+
+		// ejecucion
+		CicloLectivo cicloElectivo = new CicloLectivo(idCicloLectivo, fechaInicioCicloLectivo, fechaFinalizacionCicloLectivo,fechaInscripcion);
+		Universidad unlam = new Universidad(nombreUniversidad);
+		Comision comision = new Comision(idComision, materia1, cicloElectivo, turno);
+		Alumno alumno = new Alumno(nombreAlumno, apellidoAlumno, dniAlumno, fechaDeIngreso);
+		
+		unlam.registrar(alumno);
+		unlam.agregarCicloElectivo(cicloElectivo);
+		unlam.agregarComision(comision);
+		inscripcionExitosa= unlam.inscribirAlumnoAComision(alumno.getDniAlumno(), comision.getIdComision());
+		
+
+		// validacion
+		assertTrue(inscripcionExitosa);
+
+	}
+
 
 }
