@@ -1,25 +1,23 @@
 package ar.unlam.intraconsulta;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-
-import ar.unlam.intraconsulta.*;
 
 public class Universidad {
 
 	private String nombre;
-	private ArrayList<Comision> comisiones;
 	private ArrayList<Alumno> alumnos;
 	private ArrayList<Materia> materias;
-	private ArrayList<CicloLectivo> ciclosElectivos;
+	private ArrayList<CicloLectivo> ciclosLectivos;
 	private ArrayList<Docente> docentes;
 
 	public Universidad(String nombreUniversidad) {
 		this.nombre = nombreUniversidad;
 		this.alumnos = new ArrayList<Alumno>();
 		this.materias = new ArrayList<Materia>();
-		this.ciclosElectivos = new ArrayList<CicloLectivo>();
+		this.ciclosLectivos = new ArrayList<CicloLectivo>();
 		this.docentes = new ArrayList<Docente>();
-		this.comisiones = new ArrayList<Comision>();
+
 	}
 
 	public Boolean registrarMateria(Materia materia1) {
@@ -58,26 +56,36 @@ public class Universidad {
 		return null;
 	}
 
-	public Boolean agregarCicloElectivo(CicloLectivo cicloElectivo1) {
-		if (this.ciclosElectivos.size() != 0) {
-			for (int i = 0; i < this.ciclosElectivos.size(); i++) {
-				if (this.ciclosElectivos.get(i).equals(cicloElectivo1)) {
-					return false;
-				}
-				if (this.ciclosElectivos.get(i).lasFechasSeSuperponen(cicloElectivo1)) {
-					return false;
-				}
-			}
+	public Boolean agregarCicloLectivo(CicloLectivo cicloLectivo) {
+		Boolean sePudoAgregar = false;
+
+		if (buscarCicloLectivoPorId(cicloLectivo.getId()) == null
+				&& validarFechas(cicloLectivo.getFechaDeInicio(), cicloLectivo.getFechaDeFin())) {
+			ciclosLectivos.add(cicloLectivo);
+			sePudoAgregar = true;
 		}
-		return this.ciclosElectivos.add(cicloElectivo1);
+
+		return sePudoAgregar;
+
 	}
 
-	
+	private Boolean validarFechas(LocalDate fechaDeInicio, LocalDate fechaDeFin) {
+		Boolean sePudoValidar = true;
+		for (CicloLectivo cicloLectivo : ciclosLectivos) {
+			if (fechaDeInicio.isAfter(cicloLectivo.getFechaDeInicio())
+					&& fechaDeInicio.isBefore(cicloLectivo.getFechaDeFin())
+					|| (fechaDeFin.isAfter(cicloLectivo.getFechaDeInicio())
+							&& fechaDeFin.isBefore(cicloLectivo.getFechaDeFin()))) {
+				sePudoValidar = false;
+			}
+		}
+		return sePudoValidar;
+	}
 
-	private CicloLectivo buscarCicloElectivoPorId(Integer id) {
-		for (CicloLectivo cicloElectivo : ciclosElectivos) {
-			if (cicloElectivo.getId().equals(id)) {
-				return cicloElectivo;
+	private CicloLectivo buscarCicloLectivoPorId(Integer id) {
+		for (CicloLectivo cicloLectivo : ciclosLectivos) {
+			if (cicloLectivo.getId().equals(id)) {
+				return cicloLectivo;
 			}
 		}
 		return null;
@@ -111,48 +119,9 @@ public class Universidad {
 		this.nombre = nombre;
 	}
 
-	public Boolean agregarComision(Comision comision) {
-		Boolean sePudoAgregar = false;
-		if (validarComision(comision)) {
-			sePudoAgregar = true;
-			comisiones.add(comision);
-		}
-		return sePudoAgregar;
-	}
-
-	private boolean validarComision(Comision comision) {
-		for (Comision comision2 : comisiones) {
-			if (comision2.equals(comision)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public Boolean asignarDocente(Integer idComision, Docente docente1) {
-		Boolean sePudoAgregar = false;
-		for (Comision comision : comisiones) {
-			if (comision.getIdComision().equals(idComision)&& !comision.getDocentes().contains(docente1) ) {
-				comision.agregarDocente(docente1);
-				sePudoAgregar = true;
-				return sePudoAgregar;
-			}
-
-		}
-		return sePudoAgregar;
-	}
-
 	public Boolean agregarCorrelativas(Integer idMateria1, Integer idMateria2) {
 		Boolean sePudoAgregar = false;
-		for (Materia materia : materias) {
-			if (materia.getId().equals(idMateria1)) {
-				materia.agregarMateriaCorrelativa(this.buscarMateriaPorId(idMateria2));
-				sePudoAgregar = true;
-			}
-
-		}
-
-		return sePudoAgregar;
+		
 	}
 
 	public Boolean eliminarCorrelativa(Integer idMateria1, Integer idMateria2) {
@@ -165,10 +134,10 @@ public class Universidad {
 		}
 		return sePudoEliminar;
 	}
-	
+
 	private Comision buscarComisionPorId(Integer idComision) {
-		for(Comision i: this.comisiones) {
-			if(i.getIdComision().equals(idComision)) {
+		for (Comision i : this.comisiones) {
+			if (i.getIdComision().equals(idComision)) {
 				return i;
 			}
 		}
@@ -180,7 +149,7 @@ public class Universidad {
 		Comision comision = null;
 		alumno = buscarAlumnoPorDni(dniAlumno);
 		comision = buscarComisionPorId(idComision);
-		if(alumno != null & comision !=null) {
+		if (alumno != null & comision != null) {
 			comision.agregarAlumno(alumno);
 			return true;
 		}

@@ -7,22 +7,15 @@ public class Alumno {
 	private String nombreAlumno;
 	private String apellidoAlumno;
 	private Integer dniAlumno;
-	private Integer fechaDeIngreso;
+	private LocalDate fechaDeIngreso;
 
-	public Alumno(String nombreAlumno, String apellidoAlumno, Integer dniAlumno, Integer fechaDeIngreso) {
+	public Alumno(String nombreAlumno, String apellidoAlumno, Integer dniAlumno, LocalDate fechaDeIngreso) {
 
 		this.nombreAlumno = nombreAlumno;
 		this.apellidoAlumno = apellidoAlumno;
 		this.dniAlumno = dniAlumno;
 		this.fechaDeIngreso = fechaDeIngreso;
 
-	}
-
-	public Alumno(String nombreAlumno2, String apellidoAlumno2, Integer dniAlumno2, LocalDate fechaDeIngreso2) {
-		this.nombreAlumno = nombreAlumno2;
-		this.apellidoAlumno = apellidoAlumno2;
-		this.dniAlumno= dniAlumno2;
-		this.fechaDeIngreso = fechaDeIngreso2.getDayOfYear();
 	}
 
 	public String getNombreAlumno() {
@@ -49,12 +42,13 @@ public class Alumno {
 		this.dniAlumno = dniAlumno;
 	}
 
-	public Integer getFechaDeIngreso() {
+	public LocalDate getFechaDeIngreso() {
 		return fechaDeIngreso;
 	}
 
-	public void setFechaDeIngreso(Integer fechaDeIngreso) {
+	public void setFechaDeIngreso(LocalDate fechaDeIngreso) {
 		this.fechaDeIngreso = fechaDeIngreso;
 	}
+
 	
 }

@@ -1,13 +1,15 @@
 package ar.unlam.intraconsulta;
 
+import java.time.LocalDate;
+
 public class Docente {
 
 	private String nombre;
 	private String apellido;
 	private Integer dni;
-	private Integer fechaDeIngreso;
+	private LocalDate fechaDeIngreso;
 
-	public Docente(String nombreDocente, String apellidoDocente, Integer dniDocente, Integer fechaDeIngreso) {
+	public Docente(String nombreDocente, String apellidoDocente, Integer dniDocente, LocalDate fechaDeIngreso) {
 		this.nombre = nombreDocente;
 		this.apellido = apellidoDocente;
 		this.dni = dniDocente;
@@ -38,11 +40,11 @@ public class Docente {
 		this.dni = dni;
 	}
 
-	public Integer getFechaDeIngreso() {
+	public LocalDate getFechaDeIngreso() {
 		return fechaDeIngreso;
 	}
 
-	public void setFechaDeIngreso(Integer fechaDeIngreso) {
+	public void setFechaDeIngreso(LocalDate fechaDeIngreso) {
 		this.fechaDeIngreso = fechaDeIngreso;
 	}
 }
