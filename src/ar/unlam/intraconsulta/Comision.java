@@ -11,7 +11,7 @@ public class Comision {
 	private Turno turno;
 	private ArrayList <Docente> docentes;
 	private ArrayList <Alumno> alumnos;
-	
+	private Aula aula;
 
 	public Comision(Integer idComision, Materia materia1, CicloLectivo cicloElectivo, Turno turno) {
 		
@@ -99,5 +99,15 @@ public class Comision {
 	public void setAlumnos(ArrayList<Alumno> alumnos) {
 		this.alumnos = alumnos;
 	}
+
+	public Aula getAula() {
+		return aula;
+	}
+
+	public void setAula(Aula aula) {
+		this.aula = aula;
+	}
+	
+	
 	
 }

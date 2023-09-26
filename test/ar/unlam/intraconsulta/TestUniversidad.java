@@ -169,7 +169,7 @@ public class TestUniversidad {
 		Materia materia1 = new Materia(1, "Matematica");
 		CicloLectivo cicloElectivo2023 = new CicloLectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
 				fechaDeInscripcion);
-		Turno turno = new Turno("Mañana");
+		Turno turno = Turno.Mañana;
 
 		// preparacion
 
@@ -192,7 +192,7 @@ public class TestUniversidad {
 		Materia materia1 = new Materia(1, "Matematica");
 		CicloLectivo cicloElectivo2023 = new CicloLectivo(IdClicloElectivo, fechaDeInicio, fechaDeFin,
 				fechaDeInscripcion);
-		Turno turno = new Turno("Mañana");
+		Turno turno = Turno.Mañana;
 
 		// preparacion
 
