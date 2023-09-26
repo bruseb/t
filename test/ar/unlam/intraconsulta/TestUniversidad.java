@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import java.time.LocalDate;
 import org.junit.Test;
 
+import ar.edu.unlam.pb2.universidad.Materia;
+import ar.edu.unlam.pb2.universidad.Universidad;
+
 public class TestUniversidad {
 
 	@Test
@@ -324,85 +327,85 @@ public class TestUniversidad {
 
 	@Test
 	public void queSePuedaAgregarUnaMateriaCorrelativa() {
+		Integer idMateriaPrimera = 1;
+		String nombreMateriaPrimera = "PB1";
+		Integer idMateriaSegunda = 2;
+		String nombreMateriaSegunda = "PB2";
+		Boolean resultadoEsperado = false;
 
-		String nombreMateria1 = "Programacion I", nombreMateria2 = "Programacion II";
+		Universidad unlam = new Universidad("Unlam");
+		Materia materiaPrimera = new Materia(idMateriaPrimera, nombreMateriaPrimera);
+		Materia materiaSegunda = new Materia(idMateriaSegunda, nombreMateriaSegunda);
+
+		unlam.registrarMateria(materiaPrimera);
+		unlam.registrarMateria(materiaSegunda);
+		resultadoEsperado = unlam.agregarMateriaCorrelativa(materiaSegunda.getIdMateria(),
+				materiaPrimera.getIdMateria());
+
+		assertTrue(resultadoEsperado);
+
+	}
+
+	@Test
+	public void queSePuedaEliminarUnaMateriaCorrelativa() {
+
+		String nombreUniversidad = "Unlam", nombreMateria1 = "Programacion I", nombreMateria2 = "Programacion II";
 		Integer idMateria1 = 1, idMateria2 = 2;
-		
-		
-		
+
 		// preparacion
+
+		Universidad unlam = new Universidad(nombreUniversidad);
 		Materia materia1 = new Materia(idMateria1, nombreMateria1);
 		Materia materia2 = new Materia(idMateria2, nombreMateria2);
 
 		// ejecucion
-		
-		Boolean registroExitoso = materia1.agregarCorrelativas(idMateria1, idMateria2);
+		unlam.registrarMateria(materia1);
+		unlam.registrarMateria(materia2);
+		Boolean sePudoEliminar = unlam.eliminarCorrelativa(idMateria1, idMateria2);
 
 		// validacion
-		assertTrue(registroExitoso);
+		assertTrue(sePudoEliminar);
 
 	}
 
-//	@Test
-//	public void queSePuedaEliminarUnaMateriaCorrelativa() {
-//
-//		String nombreUniversidad = "Unlam", nombreMateria1 = "Programacion I", nombreMateria2 = "Programacion II";
-//		Integer idMateria1 = 1, idMateria2 = 2;
-//
-//		// preparacion
-//
-//		Universidad unlam = new Universidad(nombreUniversidad);
-//		Materia materia1 = new Materia(idMateria1, nombreMateria1);
-//		Materia materia2 = new Materia(idMateria2, nombreMateria2);
-//
-//		// ejecucion
-//		unlam.registrarMateria(materia1);
-//		unlam.registrarMateria(materia2);
-//		Boolean sePudoEliminar = unlam.eliminarCorrelativa(idMateria1, idMateria2);
-//
-//		// validacion
-//		assertTrue(sePudoEliminar);
-//
-//	}
-//
-//	@Test
-//	public void queSePuedaInscribirUnAlumnoAUnaComision() {
-//		Boolean inscripcionExitosa = false;
-//
-//		String nombreUniversidad = "Unlam", nombreAlumno = "Bruno", apellidoAlumno = "Merlo";
-//		Integer dniAlumno = 1;
-//		LocalDate fechaDeIngreso = LocalDate.of(2023, 2, 23);
-//		
-//		Integer idCicloLectivo = 1;
-//		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 3, 14);
-//		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 7, 14);
-//		LocalDate fechaInscripcion = LocalDate.of(2023, 3, 1);
-//	
-//		Integer idComision = 1;
-//		Materia materia1 = new Materia(1, "Matematica");
-//
-//		Turno turno = Turno.Mañana;
-//
-//		// preparacion
-//
-//
-//		// ejecucion
-//		CicloLectivo cicloElectivo = new CicloLectivo(idCicloLectivo, fechaInicioCicloLectivo, fechaFinalizacionCicloLectivo,fechaInscripcion);
-//		Universidad unlam = new Universidad(nombreUniversidad);
-//		Comision comision = new Comision(idComision, materia1, cicloElectivo, turno);
-//		Alumno alumno = new Alumno(nombreAlumno, apellidoAlumno, dniAlumno, fechaDeIngreso);
-//		
-//		unlam.registrar(alumno);
-//		unlam.agregarCicloElectivo(cicloElectivo);
-//		unlam.agregarComision(comision);
-//		inscripcionExitosa= unlam.inscribirAlumnoAComision(alumno.getDniAlumno(), comision.getIdComision());
-//		
-//
-//		// validacion
-//		assertTrue(inscripcionExitosa);
-//
-//	}
-//	
+	@Test
+	public void queSePuedaInscribirUnAlumnoAUnaComision() {
+		Boolean inscripcionExitosa = false;
+
+		String nombreUniversidad = "Unlam", nombreAlumno = "Bruno", apellidoAlumno = "Merlo";
+		Integer dniAlumno = 1;
+		LocalDate fechaDeIngreso = LocalDate.of(2023, 2, 23);
+		
+		Integer idCicloLectivo = 1;
+		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 3, 14);
+		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 7, 14);
+		LocalDate fechaInscripcion = LocalDate.of(2023, 3, 1);
+	
+		Integer idComision = 1;
+		Materia materia1 = new Materia(1, "Matematica");
+
+		Turno turno = Turno.Mañana;
+
+		// preparacion
+
+
+		// ejecucion
+		CicloLectivo cicloLectivo = new CicloLectivo(idCicloLectivo, fechaInicioCicloLectivo, fechaFinalizacionCicloLectivo,fechaInscripcion);
+		Universidad unlam = new Universidad(nombreUniversidad);
+		Comision comision = new Comision(idComision, materia1, turno);
+		Alumno alumno = new Alumno(nombreAlumno, apellidoAlumno, dniAlumno, fechaDeIngreso);
+		
+		unlam.registrar(alumno);
+		unlam.agregarCicloLectivo(cicloLectivo);
+		cicloLectivo.agregarComision(comision);
+		inscripcionExitosa= unlam.inscribirAlumnoAComision(alumno.getDniAlumno(), comision.getIdComision(),cicloLectivo);
+		
+
+		// validacion
+		assertTrue(inscripcionExitosa);
+
+	}
+	
 //	@Test
 //	public void queNoSePuedaInscribirUnAlumnoAUnaComisionSiNoTieneLasCorrelativasAprobadas() {
 //		Boolean inscripcionExitosa = false;

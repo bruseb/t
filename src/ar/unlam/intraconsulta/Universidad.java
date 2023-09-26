@@ -3,6 +3,8 @@ package ar.unlam.intraconsulta;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import ar.edu.unlam.pb2.universidad.Materia;
+
 public class Universidad {
 
 	private String nombre;
@@ -120,8 +122,23 @@ public class Universidad {
 	}
 
 	public Boolean agregarCorrelativas(Integer idMateria1, Integer idMateria2) {
-		Boolean sePudoAgregar = false;
-		
+//		Bruno
+		Materia materiaPb1 = null;
+		Materia materiaPb2 = null;
+		Boolean valorDeRetorno = false;
+		for (int i = 0; i < this.materias.size(); i++) {
+			if (this.materias.get(i).getIdMateria().equals(idMateria1)) {
+				materiaPb1 = this.materias.get(i);
+			} else if (this.materias.get(i).getIdMateria().equals(idMateria2)) {
+				materiaPb2 = this.materias.get(i);
+			}
+		}
+
+		if (materiaPb1 != null && materiaPb2 != null) {
+			valorDeRetorno = materiaPb2.agregarMateriaCorrelativa(materiaPb1);
+		}
+
+		return valorDeRetorno;		
 	}
 
 	public Boolean eliminarCorrelativa(Integer idMateria1, Integer idMateria2) {
@@ -135,26 +152,40 @@ public class Universidad {
 		return sePudoEliminar;
 	}
 
-	private Comision buscarComisionPorId(Integer idComision) {
-		for (Comision i : this.comisiones) {
-			if (i.getIdComision().equals(idComision)) {
-				return i;
-			}
-		}
-		return null;
-	}
+	
 
-	public Boolean inscribirAlumnoAComision(Integer dniAlumno, Integer idComision) {
+	public Boolean inscribirAlumnoAComision(Integer dniAlumno, Integer idComision,CicloLectivo cicloLectivo) {
 		Alumno alumno = null;
 		Comision comision = null;
 		alumno = buscarAlumnoPorDni(dniAlumno);
-		comision = buscarComisionPorId(idComision);
+		comision = cicloLectivo.buscarComisionPorId(idComision);
 		if (alumno != null & comision != null) {
 			comision.agregarAlumno(alumno);
 			return true;
 		}
 
 		return false;
+	}
+
+	public Boolean agregarMateriaCorrelativa(Integer idMateria, Integer idMateria2) {
+			Materia materiaPb1 = null;
+			Materia materiaPb2 = null;
+			Boolean valorDeRetorno = false;
+			for (int i = 0; i < this.materias.size(); i++) {
+				if (this.materias.get(i).getIdMateria().equals(idMateria)) {
+					materiaPb1 = this.materias.get(i);
+				} else if (this.materias.get(i).getIdMateria().equals(idMateria2)) {
+					materiaPb2 = this.materias.get(i);
+				}
+			}
+
+			if (materiaPb1 != null && materiaPb2 != null) {
+				valorDeRetorno = materiaPb2.agregarMateriaCorrelativa(materiaPb1);
+			}
+
+			return valorDeRetorno;
+		
+
 	}
 
 }

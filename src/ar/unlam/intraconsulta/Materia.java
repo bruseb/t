@@ -14,8 +14,8 @@ public class Materia {
 		this.correlativas = new ArrayList <Materia>(); 
 	}
 	
-	public void agregarMateriaCorrelativa(Materia materia) {
-		correlativas.add(materia);
+	public Boolean agregarMateriaCorrelativa(Materia materia) {
+		return correlativas.add(materia);
 	}
 	
 	public void eliminarCorrelativa(Materia materia) {
@@ -45,5 +45,10 @@ public class Materia {
 
 	public void setCorrelativas(ArrayList<Materia> correlativas) {
 		this.correlativas = correlativas;
+	}
+
+	public Integer getIdMateria() {
+		// TODO Auto-generated method stub
+		return this.id;
 	}
 }

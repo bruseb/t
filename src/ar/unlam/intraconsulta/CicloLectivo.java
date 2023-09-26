@@ -59,6 +59,15 @@ public class CicloLectivo {
 		}
 		return true;
 	}
+	
+	public Comision buscarComisionPorId(Integer idComision) {
+		for (Comision i : this.comisiones) {
+			if (i.getIdComision().equals(idComision)) {
+				return i;
+			}
+		}
+		return null;
+	}
 
 	public Integer getId() {
 		return id;
