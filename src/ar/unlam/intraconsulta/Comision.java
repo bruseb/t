@@ -13,7 +13,7 @@ public class Comision {
 	private ArrayList<Alumno> alumnos;
 	private Aula aula;
 	private ArrayList<RegistroDeNotaDeExamen> registroNota;
-	
+
 	public Comision() {
 		this.registroNota = new ArrayList<RegistroDeNotaDeExamen>();
 	}
@@ -27,7 +27,7 @@ public class Comision {
 		this.alumnos = new ArrayList<Alumno>();
 		this.registroNota = new ArrayList<RegistroDeNotaDeExamen>();
 	}
-	
+
 	public void agregarDocente(Docente docente) {
 		docentes.add(docente);
 	}
@@ -111,21 +111,66 @@ public class Comision {
 
 	public Boolean agregarRegistroDeNotaDeExamen(RegistroDeNotaDeExamen registroExamen) {
 		TipoDeNota tipoDeNotaAAlmacenar = registroExamen.getNota().getTipoDeNota();
-		for (int i = 0; i < this.registroNota.size();i++) {
-			if(this.registroNota.get(i).getNota().getTipoDeNota().equals(tipoDeNotaAAlmacenar)) {
+		for (int i = 0; i < this.registroNota.size(); i++) {
+			if (this.registroNota.get(i).getNota().getTipoDeNota().equals(tipoDeNotaAAlmacenar)) {
 				return false;
 			}
 		}
 		return this.registroNota.add(registroExamen);
 	}
 
-	public Boolean rendirRecuperatorio(RegistroDeNotaDeExamen registroExamen) {
-			TipoDeNota tipoDeNota = registroExamen.getNota().getTipoDeNota();
-			for(int i = 0; i< this.registroNota.size();i++) {
-				if(this.registroNota.get(i).getNota().getTipoDeNota().equals()) {
-					return false;
-				}			
+	private Boolean puedeRecuperar(Integer dni) {
+		Double notaPrimerParcial = 0.0;
+		Double notaSegundoParcial = 0.0;
+		TipoDeNota tipoPrimerParcial = null;
+		TipoDeNota tipoSegundoParcial = null;
+		for (RegistroDeNotaDeExamen i : this.registroNota) {
+			if (i.getAlumno().getDniAlumno().equals(dni)) {
+				if (i.getNota().getTipoDeNota().equals(TipoDeNota.Primer_parcial) && i.getNota().getValor() >= 4){ 
+					notaPrimerParcial = i.getNota().getValor();
+				}
+				if (i.getNota().getTipoDeNota().equals(TipoDeNota.Segundo_parcial) && i.getNota().getValor() >= 4) {
+					notaSegundoParcial = i.getNota().getValor();
+				}
 			}
+		
+		}
+		if(!notaPrimerParcial.equals(null) && !notaSegundoParcial.equals(null)){
+			return true;
+		}
+		return false;
+
+	}
+	
+	
+
+	
+				
+
+
+
+	public Boolean rendirRecuperatorio(Integer dniAlumno, TipoDeNota recuperatorio, Double valorNota) {
+		Nota nota = null;
+		Alumno alumno = null;
+		if(puedeRecuperar(dniAlumno)){
+			for (RegistroDeNotaDeExamen i : this.registroNota) {
+				if(i.getAlumno().getDniAlumno().equals(dniAlumno) && i.getNota().getTipoDeNota().equals(recuperatorio)) {
+					alumno = i.getAlumno();
+					if(i.getNota().getTipoDeNota().equals(TipoDeNota.Primer_parcial)) {
+						nota = new Nota(valorNota, TipoDeNota.Rec_primer_parcial);
+						i = new RegistroDeNotaDeExamen(alumno,nota);
+						return true;
+					}
+					if(i.getNota().getTipoDeNota().equals(TipoDeNota.Segundo_parcial)) {
+						nota = new Nota(valorNota, TipoDeNota.Rec_segundo_parcial);
+						i = new RegistroDeNotaDeExamen(alumno,nota);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+		
 	}
 
 }

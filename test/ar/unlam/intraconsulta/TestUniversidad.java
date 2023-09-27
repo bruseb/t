@@ -527,27 +527,29 @@ public class TestUniversidad {
 		Alumno alumno = null;
 		Integer dniAlumno = 1;
 		Nota nota = null;
-		Double valorNota = 1.0;
+		Double valorNota = null;
 		TipoDeNota primerParcial = TipoDeNota.Primer_parcial;
-		TipoDeNota recuperatorio = TipoDeNota.Rec_primer_parcial;
+		TipoDeNota segundoParcial = TipoDeNota.Segundo_parcial;
 		
-
-
+		
+		valorNota= 1.0;
+		comision = new Comision();
 		nota = new Nota(valorNota,primerParcial);
 		alumno = new Alumno(dniAlumno);
-		comision = new Comision();
 		registroExamen = new RegistroDeNotaDeExamen(alumno,nota);
-		
 		comision.agregarRegistroDeNotaDeExamen(registroExamen);
 		
 		valorNota = 7.0;
-		nota = new Nota(valorNota, recuperatorio);
-		
+		nota = new Nota(valorNota, segundoParcial);
 		registroExamen = new RegistroDeNotaDeExamen(alumno,nota);
+		comision.agregarRegistroDeNotaDeExamen(registroExamen);
 		
-		comision.rendirRecuperatorio(registroExamen);
 		
-		assertFalse(resultadoEsperado);
+		valorNota = 7.0;
+		resultadoEsperado = comision.rendirRecuperatorio(dniAlumno,primerParcial,valorNota);
+
+		
+		assertTrue(resultadoEsperado);
 		
 	}
 	
