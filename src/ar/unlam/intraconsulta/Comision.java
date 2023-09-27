@@ -119,4 +119,13 @@ public class Comision {
 		return this.registroNota.add(registroExamen);
 	}
 
+	public Boolean rendirRecuperatorio(RegistroDeNotaDeExamen registroExamen) {
+			TipoDeNota tipoDeNota = registroExamen.getNota().getTipoDeNota();
+			for(int i = 0; i< this.registroNota.size();i++) {
+				if(this.registroNota.get(i).getNota().getTipoDeNota().equals()) {
+					return false;
+				}			
+			}
+	}
+
 }

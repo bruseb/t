@@ -5,6 +5,7 @@ public class RegistroDeNotaDeExamen {
 	private Alumno alumno;
 	private Nota nota;
 	
+	
 	public RegistroDeNotaDeExamen(Alumno alumno, Nota nota) {
 		this.alumno = alumno;
 		this.nota = nota;

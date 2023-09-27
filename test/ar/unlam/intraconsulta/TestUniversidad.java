@@ -519,6 +519,38 @@ public class TestUniversidad {
 		
 	}
 	
+	@Test
+	public void queSePuedaRecuperarUnParcial() {
+		Boolean resultadoEsperado = null;
+		Comision comision =null;
+		RegistroDeNotaDeExamen registroExamen = null;
+		Alumno alumno = null;
+		Integer dniAlumno = 1;
+		Nota nota = null;
+		Double valorNota = 1.0;
+		TipoDeNota primerParcial = TipoDeNota.Primer_parcial;
+		TipoDeNota recuperatorio = TipoDeNota.Rec_primer_parcial;
+		
+
+
+		nota = new Nota(valorNota,primerParcial);
+		alumno = new Alumno(dniAlumno);
+		comision = new Comision();
+		registroExamen = new RegistroDeNotaDeExamen(alumno,nota);
+		
+		comision.agregarRegistroDeNotaDeExamen(registroExamen);
+		
+		valorNota = 7.0;
+		nota = new Nota(valorNota, recuperatorio);
+		
+		registroExamen = new RegistroDeNotaDeExamen(alumno,nota);
+		
+		comision.rendirRecuperatorio(registroExamen);
+		
+		assertFalse(resultadoEsperado);
+		
+	}
+	
 	
 	
 
