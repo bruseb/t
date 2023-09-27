@@ -18,6 +18,14 @@ public class Alumno {
 
 	}
 
+	public Alumno() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Alumno(Integer dniAlumno2) {
+		this.dniAlumno = dniAlumno2;
+	}
+
 	public String getNombreAlumno() {
 		return nombreAlumno;
 	}

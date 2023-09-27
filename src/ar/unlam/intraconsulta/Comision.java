@@ -12,6 +12,11 @@ public class Comision {
 	private ArrayList<Docente> docentes;
 	private ArrayList<Alumno> alumnos;
 	private Aula aula;
+	private ArrayList<RegistroDeNotaDeExamen> registroNota;
+	
+	public Comision() {
+		this.registroNota = new ArrayList<RegistroDeNotaDeExamen>();
+	}
 
 	public Comision(Integer idComision, Materia materia1, Turno turno) {
 
@@ -20,7 +25,7 @@ public class Comision {
 		this.turno = turno;
 		this.docentes = new ArrayList<Docente>();
 		this.alumnos = new ArrayList<Alumno>();
-
+		this.registroNota = new ArrayList<RegistroDeNotaDeExamen>();
 	}
 	
 	public void agregarDocente(Docente docente) {
@@ -102,6 +107,16 @@ public class Comision {
 
 	public void setIdCicloLectivo(Integer idCicloLectivo) {
 		this.idCicloLectivo = idCicloLectivo;
+	}
+
+	public Boolean agregarRegistroDeNotaDeExamen(RegistroDeNotaDeExamen registroExamen) {
+		TipoDeNota tipoDeNotaAAlmacenar = registroExamen.getNota().getTipoDeNota();
+		for (int i = 0; i < this.registroNota.size();i++) {
+			if(this.registroNota.get(i).getNota().getTipoDeNota().equals(tipoDeNotaAAlmacenar)) {
+				return false;
+			}
+		}
+		return this.registroNota.add(registroExamen);
 	}
 
 }

@@ -303,18 +303,17 @@ public class TestUniversidad {
 		LocalDate fechaDeInscripcion = LocalDate.of(2023, 3, 13);
 		Materia materia1 = new Materia(1, "Matematica");
 		Turno turno = Turno.Mañana;
-		
+
 		Universidad unlam = new Universidad(nombreUniversidad);
 		Docente docente1 = new Docente(nombreDocente1, apellidoDocente1, dniDocente1, fechaDeIngreso1);
 		CicloLectivo cicloLectivo1 = new CicloLectivo(IdClicloLectivo, fechaDeInicio, fechaDeFin, fechaDeInscripcion);
 		Comision comision = new Comision(idComision, materia1, turno);
-		
+
 		// preparacion
 
 		unlam.registrarDocente(docente1);
 		unlam.agregarCicloLectivo(cicloLectivo1);
 		cicloLectivo1.agregarComision(comision);
-		
 
 		// ejecucion
 		cicloLectivo1.asignarDocenteAComision(idComision, docente1);
@@ -375,12 +374,12 @@ public class TestUniversidad {
 		String nombreUniversidad = "Unlam", nombreAlumno = "Bruno", apellidoAlumno = "Merlo";
 		Integer dniAlumno = 1;
 		LocalDate fechaDeIngreso = LocalDate.of(2023, 2, 23);
-		
+
 		Integer idCicloLectivo = 1;
 		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 3, 14);
 		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 7, 14);
 		LocalDate fechaInscripcion = LocalDate.of(2023, 3, 1);
-	
+
 		Integer idComision = 1;
 		Materia materia1 = new Materia(1, "Matematica");
 
@@ -388,60 +387,177 @@ public class TestUniversidad {
 
 		// preparacion
 
-
 		// ejecucion
-		CicloLectivo cicloLectivo = new CicloLectivo(idCicloLectivo, fechaInicioCicloLectivo, fechaFinalizacionCicloLectivo,fechaInscripcion);
+		CicloLectivo cicloLectivo = new CicloLectivo(idCicloLectivo, fechaInicioCicloLectivo,
+				fechaFinalizacionCicloLectivo, fechaInscripcion);
 		Universidad unlam = new Universidad(nombreUniversidad);
 		Comision comision = new Comision(idComision, materia1, turno);
 		Alumno alumno = new Alumno(nombreAlumno, apellidoAlumno, dniAlumno, fechaDeIngreso);
-		
+
 		unlam.registrar(alumno);
 		unlam.agregarCicloLectivo(cicloLectivo);
 		cicloLectivo.agregarComision(comision);
-		inscripcionExitosa= unlam.inscribirAlumnoAComision(alumno.getDniAlumno(), comision.getIdComision(),cicloLectivo);
-		
+		inscripcionExitosa = unlam.inscribirAlumnoAComision(alumno.getDniAlumno(), comision.getIdComision(),
+				cicloLectivo);
 
 		// validacion
 		assertTrue(inscripcionExitosa);
 
 	}
+
+	@Test
+	public void queSePuedanCargarNota() {
+		Boolean inscripcionExitosa = false;
+
+		String nombreUniversidad = "Unlam", nombreAlumno = "Bruno", apellidoAlumno = "Merlo";
+		Integer dniAlumno = 1;
+		LocalDate fechaDeIngreso = LocalDate.of(2023, 2, 23);
+
+		Integer idCicloLectivo = 1;
+		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 3, 14);
+		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 7, 14);
+		LocalDate fechaInscripcion = LocalDate.of(2023, 3, 1);
+
+		Integer idComision = 1;
+		Materia materia1 = new Materia(1, "Matematica");
+
+		Turno turno = Turno.Mañana;
+
+		// preparacion
+
+		// ejecucion
+		CicloLectivo cicloLectivo = new CicloLectivo(idCicloLectivo, fechaInicioCicloLectivo,
+				fechaFinalizacionCicloLectivo, fechaInscripcion);
+		Universidad unlam = new Universidad(nombreUniversidad);
+		Comision comision = new Comision(idComision, materia1, turno);
+		Alumno alumno = new Alumno(nombreAlumno, apellidoAlumno, dniAlumno, fechaDeIngreso);
+
+		unlam.registrar(alumno);
+		unlam.agregarCicloLectivo(cicloLectivo);
+		cicloLectivo.agregarComision(comision);
+		inscripcionExitosa = unlam.inscribirAlumnoAComision(alumno.getDniAlumno(), comision.getIdComision(),
+				cicloLectivo);
+
+		// validacion
+		assertTrue(inscripcionExitosa);
+
+	}
+
+	@Test
+	public void queSePuedaCrearNota() {
+		Nota nota = null;
+		Double valorNota = 0.0;
+		TipoDeNota tipoDeNota = TipoDeNota.Primer_parcial;
+
+		nota = new Nota(valorNota, tipoDeNota);
+
+		assertNotNull(nota);
+
+	}
+
+	@Test
+	public void queElValorDeLaNotaSeaEntreUnoYDiez() {
+		Nota nota1 = null;
+		Nota nota2= null;
+		Double valorNota1 = 1.0;
+		Double valorNota2 = 10.0;
+		Double resultadoEsperado1 = null;
+		Double resultadoEsperado2 = null;
+
+		nota1 = new Nota(valorNota1);
+		nota2 = new Nota(valorNota2);
+		resultadoEsperado1 = nota1.getValor();
+		resultadoEsperado2= nota2.getValor();
+
+		assertEquals(resultadoEsperado1, nota1.getValor(), 0.01);
+		assertEquals(resultadoEsperado2, nota2.getValor(), 0.01);
+
+	}
 	
-//	@Test
-//	public void queNoSePuedaInscribirUnAlumnoAUnaComisionSiNoTieneLasCorrelativasAprobadas() {
-//		Boolean inscripcionExitosa = false;
-//
-//		String nombreUniversidad = "Unlam", nombreAlumno = "Bruno", apellidoAlumno = "Merlo";
-//		Integer dniAlumno = 1;
-//		LocalDate fechaDeIngreso = LocalDate.of(2023, 2, 23);
-//		
-//		Integer idCicloLectivo = 1;
-//		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 3, 14);
-//		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 7, 14);
-//		LocalDate fechaInscripcion = LocalDate.of(2023, 3, 1);
-//	
-//		Integer idComision = 1;
-//		Materia materia1 = new Materia(1, "Matematica");
-//
-//		Turno turno = Turno.Mañana;
-//
-//		// preparacion
-//
-//
-//		// ejecucion
-//		CicloLectivo cicloElectivo = new CicloLectivo(idCicloLectivo, fechaInicioCicloLectivo, fechaFinalizacionCicloLectivo,fechaInscripcion);
-//		Universidad unlam = new Universidad(nombreUniversidad);
-//		Comision comision = new Comision(idComision, materia1, cicloElectivo, turno);
-//		Alumno alumno = new Alumno(nombreAlumno, apellidoAlumno, dniAlumno, fechaDeIngreso);
-//		
-//		unlam.registrar(alumno);
-//		unlam.agregarCicloElectivo(cicloElectivo);
-//		unlam.agregarComision(comision);
-//		inscripcionExitosa= unlam.inscribirAlumnoAComision(alumno.getDniAlumno(), comision.getIdComision());
-//		
-//
-//		// validacion
-//		assertTrue(inscripcionExitosa);
-//
-//	}
+	@Test
+	public void agregarRegistroDeNotaAComision() {
+		Boolean resultadoEsperado = null;
+		Comision comision =null;
+		RegistroDeNotaDeExamen registroExamen = null;
+		Alumno alumno = null;
+		Integer dniAlumno = 1;
+		Nota nota = null;
+		Double valorNota = 1.0;
+		TipoDeNota tipoDeNota = TipoDeNota.Primer_parcial;
+
+		nota = new Nota(valorNota,tipoDeNota);
+		alumno = new Alumno(dniAlumno);
+		comision = new Comision();
+		registroExamen = new RegistroDeNotaDeExamen(alumno,nota);
+		
+		resultadoEsperado= comision.agregarRegistroDeNotaDeExamen(registroExamen);
+		
+		assertTrue(resultadoEsperado);
+		
+	}
+	
+	@Test
+	public void queNoSePuedaAgregarRegistroDeNotaDelMismoTipo() {
+		Boolean resultadoEsperado = null;
+		Comision comision =null;
+		RegistroDeNotaDeExamen registroExamen = null;
+		Alumno alumno = null;
+		Integer dniAlumno = 1;
+		Nota nota = null;
+		Double valorNota = 1.0;
+		TipoDeNota tipoDeNota = TipoDeNota.Primer_parcial;
+
+		nota = new Nota(valorNota,tipoDeNota);
+		alumno = new Alumno(dniAlumno);
+		comision = new Comision();
+		registroExamen = new RegistroDeNotaDeExamen(alumno,nota);
+		
+		comision.agregarRegistroDeNotaDeExamen(registroExamen);
+		resultadoEsperado= comision.agregarRegistroDeNotaDeExamen(registroExamen);
+		
+		assertFalse(resultadoEsperado);
+		
+	}
+	
+	
+	
+
+	@Test
+	public void queNoSePuedaInscribirUnAlumnoAUnaComisionSiNoTieneLasCorrelativasAprobadas() {
+		Boolean inscripcionExitosa = false;
+
+		String nombreUniversidad = "Unlam", nombreAlumno = "Bruno", apellidoAlumno = "Merlo";
+		Integer dniAlumno = 1;
+		LocalDate fechaDeIngreso = LocalDate.of(2023, 2, 23);
+
+		Integer idCicloLectivo = 1;
+		LocalDate fechaInicioCicloLectivo = LocalDate.of(2023, 3, 14);
+		LocalDate fechaFinalizacionCicloLectivo = LocalDate.of(2023, 7, 14);
+		LocalDate fechaInscripcion = LocalDate.of(2023, 3, 1);
+
+		Integer idComision = 1;
+		Materia materia1 = new Materia(1, "Matematica");
+
+		Turno turno = Turno.Mañana;
+
+		// preparacion
+
+		// ejecucion
+		CicloLectivo cicloLectivo = new CicloLectivo(idCicloLectivo, fechaInicioCicloLectivo,
+				fechaFinalizacionCicloLectivo, fechaInscripcion);
+		Universidad unlam = new Universidad(nombreUniversidad);
+		Comision comision = new Comision(idComision, materia1, turno);
+		Alumno alumno = new Alumno(nombreAlumno, apellidoAlumno, dniAlumno, fechaDeIngreso);
+
+		unlam.registrar(alumno);
+		unlam.agregarCicloLectivo(cicloLectivo);
+		cicloLectivo.agregarComision(comision);
+		inscripcionExitosa = unlam.inscribirAlumnoAComision(alumno.getDniAlumno(), comision.getIdComision(),
+				cicloLectivo);
+
+		// validacion
+		assertTrue(inscripcionExitosa);
+
+	}
 
 }
